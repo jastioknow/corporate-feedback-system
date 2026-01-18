@@ -1,3 +1,18 @@
+#Build
+build/
+.next/
+bin/
+
+#prisma custom
+packages/db/src/generated/prisma
+
+# misc
+.DS_Store
+*.pem
+
+# vercel
+.vercel
+
 # Logs
 logs
 *.log
@@ -137,3 +152,5 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+/generated/prisma

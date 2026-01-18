@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": true
+  },
+  "references": [
+    { "path": "./packages/db" },
+    { "path": "./packages/types" },
+    { "path": "./apps/api" },
+    { "path": "./apps/web" }
+  ]
+}
