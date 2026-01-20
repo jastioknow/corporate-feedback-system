@@ -2,15 +2,11 @@
   "name": "corporate-feedback-system",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "description": "Full-stack internal feedback management system. Built with Next.js, NestJS, and Prisma. Features include Role-Based Access Control (RBAC), Automated CI/CD pipelines via GitHub Actions, and E2E testing with Jest",
   "scripts": {
-    "type-check": "npm run type-check --workspaces --if-present",
-    "lint": "eslint . --max-warnings 0",
-    "build": "npm run build --workspaces --if-present"
+    "type-check": "pnpm -r type-check",
+    "lint": "pnpm -r lint",
+    "build": "pnpm -r build"
   },
   "repository": {
     "type": "git",
@@ -24,12 +20,9 @@
   "homepage": "https://github.com/jastioknow/corporate-feedback-system#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@next/eslint-plugin-next": "^16.1.1",
+    "@types/node": "^22.19.7",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "globals": "^17.0.0",
     "typescript-eslint": "^8.51.0"
   }
 }
