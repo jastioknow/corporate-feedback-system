@@ -4,6 +4,7 @@
   "main": "./src/index.js",
   "types": "./src/index.ts",
   "scripts": {
+    "gen": "prisma generate",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0 --cache"
   },

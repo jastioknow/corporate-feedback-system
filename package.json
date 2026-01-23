@@ -4,6 +4,7 @@
   "private": true,
   "description": "Full-stack internal feedback management system. Built with Next.js, NestJS, and Prisma. Features include Role-Based Access Control (RBAC), Automated CI/CD pipelines via GitHub Actions, and E2E testing with Jest",
   "scripts": {
+    "prisma:generate": "pnpm --filter @corporate/db gen",
     "type-check": "pnpm -r type-check",
     "lint": "pnpm -r lint",
     "build": "pnpm -r build"

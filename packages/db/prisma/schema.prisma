@@ -5,11 +5,58 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+enum FeedbackStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+enum Category {
+  OFFICE
+  EQUIPMENT
+  PROCESSES
+  BENEFITS
+  OTHER
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  role      Role       @default(USER)
+
+  feedbacks Feedback[]
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Feedback {
+  id           String         @id @default(uuid())
+  title        String
+  content      String
+  category     Category       @default(OTHER)
+  status       FeedbackStatus @default(PENDING)
+  
+  adminReply   String?
+  
+  isAnonymous  Boolean        @default(true)
+  isPrivate    Boolean        @default(false)
+  
+  author       User           @relation(fields: [authorId], references: [id])
+  authorId     String
+
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
