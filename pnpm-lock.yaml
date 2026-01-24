@@ -27,7 +27,7 @@ importers:
   apps/api:
     dependencies:
       '@corporate/db':
-        specifier: workspace:**
+        specifier: workspace:*
         version: link:../../packages/db
       '@nestjs/common':
         specifier: ^11.0.1
