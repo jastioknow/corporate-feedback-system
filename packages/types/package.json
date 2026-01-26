@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "@corporate/db": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }
