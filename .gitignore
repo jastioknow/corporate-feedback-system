@@ -4,7 +4,7 @@ build/
 bin/
 
 #prisma custom
-packages/db/src/generated/prisma
+packages/db/prisma/generated
 
 # misc
 .DS_Store
