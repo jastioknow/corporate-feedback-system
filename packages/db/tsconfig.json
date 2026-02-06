@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "target": "es2023",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "composite": true,
     "declaration": true,
     "declarationMap": true,
     "incremental": true,
-    "noEmit": true,
+    "noEmit": false,
     "rootDir": ".",
     "outDir": "./dist",
     "strict": true,

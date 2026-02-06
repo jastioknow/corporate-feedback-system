@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "type-check": "tsc --noEmit",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint . --max-warnings 0 --cache"
+    "dev": "nx next:dev",
+    "build": "nx next:build",
+    "start": "nx next:start",
+    "lint": "nx eslint:lint --max-warnings 0 --cache"
   },
   "dependencies": {
     "next": "16.1.3",
