@@ -5,10 +5,10 @@
   "description": "Full-stack internal feedback management system. Built with Next.js, NestJS, and Prisma. Features include Role-Based Access Control (RBAC), Automated CI/CD pipelines via GitHub Actions, and E2E testing with Jest",
   "scripts": {
     "prisma:seed": "pnpm --filter @corporate/db exec prisma db seed",
-    "prisma:generate": "pnpm --filter @corporate/db gen",
-    "type-check": "pnpm -r type-check",
-    "lint": "pnpm -r lint",
-    "build": "pnpm -r build"
+    "prisma:generate": "pnpm --filter @corporate/db generate",
+    "type-check": "pnpm nx run-many -t type-check",
+    "lint": "pnpm nx run-many -t lint",
+    "build": "pnpm nx run-many -t build"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,21 @@
   "homepage": "https://github.com/jastioknow/corporate-feedback-system#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@nestjs/schematics": "^11.0.0",
+    "@nx/eslint": "22.4.2",
+    "@nx/jest": "22.4.2",
+    "@nx/nest": "22.4.5",
+    "@nx/next": "22.4.2",
     "@types/node": "^22.19.7",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
+    "jest": "^30.0.2",
+    "nx": "22.4.5",
     "typescript-eslint": "^8.51.0"
+  },
+  "dependencies": {
+    "next": "~16.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

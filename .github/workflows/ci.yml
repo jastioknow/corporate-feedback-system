@@ -33,6 +33,9 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm run prisma:generate
 
+      - name: Build Shared Libraries
+        run: pnpm nx run-many -t build --projects=@corporate/db
+
       - name: Run Eslint
         run: pnpm run lint
 

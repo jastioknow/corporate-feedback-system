@@ -5,12 +5,10 @@
   "types": "./index.ts",
   "scripts": {
     "type-check": "tsc --noEmit",
-    "lint": "eslint . --max-warnings 0 --cache"
-  },
-  "dependencies": {
-    "@corporate/db": "workspace:*"
+    "lint": "nx eslint:lint --max-warnings 0"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@corporate/db": "workspace:*"
   }
 }
