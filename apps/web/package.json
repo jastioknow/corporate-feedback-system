@@ -7,7 +7,7 @@
     "dev": "nx next:dev",
     "build": "nx next:build",
     "start": "nx next:start",
-    "lint": "nx eslint:lint --max-warnings 0 --cache"
+    "lint": "nx eslint:lint --max-warnings 0"
   },
   "dependencies": {
     "next": "16.1.3",

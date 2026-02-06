@@ -5,7 +5,7 @@
   "types": "./index.ts",
   "scripts": {
     "type-check": "tsc --noEmit",
-    "lint": "nx eslint:lint --max-warnings 0 --cache"
+    "lint": "nx eslint:lint --max-warnings 0"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
