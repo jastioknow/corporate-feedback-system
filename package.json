@@ -6,9 +6,11 @@
   "scripts": {
     "prisma:seed": "pnpm --filter @corporate/db exec prisma db seed",
     "prisma:generate": "pnpm --filter @corporate/db generate",
-    "type-check": "pnpm nx run-many -t type-check",
-    "lint": "pnpm nx run-many -t lint",
-    "build": "pnpm nx run-many -t build"
+    "prisma:migrate:deploy": "pnpm --filter @corporate/db exec prisma migrate deploy",
+    "type-check": "nx run-many -t type-check",
+    "lint": "nx run-many -t lint",
+    "build": "nx run-many -t build",
+    "test:e2e": "nx test:e2e api"
   },
   "repository": {
     "type": "git",
