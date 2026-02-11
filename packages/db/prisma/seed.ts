@@ -9,6 +9,7 @@ async function main() {
     update: {},
     create: {
       email: 'admin@corporate.com',
+      name: 'Adminchik',
       password: hashedPassword,
       role: 'ADMIN',
     },
@@ -19,6 +20,7 @@ async function main() {
     where: { email: 'user@corporate.com' },
     update: {},
     create: {
+      name: 'Userochek',
       email: 'user@corporate.com',
       password: hashedPassword,
       role: 'USER',
