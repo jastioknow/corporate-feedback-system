@@ -7,6 +7,7 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { ITokenPayload } from './interfaces/request-with-user.interface';
+import { Role } from '@corporate/db';
 
 @Injectable()
 export class AuthService {
@@ -75,7 +76,7 @@ export class AuthService {
     return { user, tokens };
   }
 
-  private generateTokens(userId: string, email: string, role: string, name: string) {
+  private generateTokens(userId: string, email: string, role: Role, name: string) {
     const payload: ITokenPayload = { sub: userId, email, role, name };
     return {
       access: this.jwtService.sign(payload, {

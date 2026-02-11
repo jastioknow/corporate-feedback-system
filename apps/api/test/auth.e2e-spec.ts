@@ -70,20 +70,20 @@ describe('AuthController (e2e)', () => {
   });
 
   describe('/api/auth/login (POST)', () => {
-    const { emailAdmin, passCorrect } = {
-      emailAdmin: 'admin@corporate.com',
+    const { emailUser, passCorrect } = {
+      emailUser: 'user@corporate.com',
       passCorrect: 'root',
     };
 
     it('Should authenticate user and issue secure tokens on correct credentials', async () => {
       const res = await request(app.getHttpServer())
         .post('/api/auth/login')
-        .send({ email: emailAdmin, password: passCorrect })
+        .send({ email: emailUser, password: passCorrect })
         .expect(200);
 
       expect(res.body).toMatchObject({
         user: {
-          email: emailAdmin,
+          email: emailUser,
           id: expect.any(String),
           role: expect.any(String),
         },
@@ -103,7 +103,7 @@ describe('AuthController (e2e)', () => {
     it('Should deny access with 401 status when password does not match', () => {
       return request(app.getHttpServer())
         .post('/api/auth/login')
-        .send({ email: emailAdmin, password: 'wrong' })
+        .send({ email: emailUser, password: 'wrong' })
         .expect(401);
     });
 
@@ -155,6 +155,24 @@ describe('AuthController (e2e)', () => {
       expect(res.body).toEqual({});
       expect(cookie).toMatch(/^refresh=;(.*Max-Age=0|.*Expires=)/);
       expect(cookie).toContain('HttpOnly');
+    });
+  });
+
+  describe('(RBAC) Access Control', () => {
+    it('Should allow access for valid role', () => {
+      return request(app.getHttpServer())
+        .get('/api/auth/profile')
+        .set('Authorization', `Bearer ${tokens.access}`)
+        .expect(200);
+    });
+    it('Should deny access for insufficient role', () => {
+      return request(app.getHttpServer())
+        .post('/api/auth/role')
+        .set('Authorization', `Bearer ${tokens.access}`)
+        .expect(403);
+    });
+    it('Should deny access for unauthenticated user', () => {
+      return request(app.getHttpServer()).post('/api/auth/role').expect(401);
     });
   });
 

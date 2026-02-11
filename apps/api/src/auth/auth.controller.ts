@@ -17,6 +17,9 @@ import { RegisterDto } from './dto/register.dto';
 import { AuthGuard } from '@nestjs/passport';
 import type { Response } from 'express';
 import { RequestWithUser } from './interfaces/request-with-user.interface';
+import { RolesGuard } from './guards/roles.guard';
+import { Roles } from './decorators/roles.decorator';
+import { Role } from '@corporate/db';
 
 @Controller('auth')
 export class AuthController {
@@ -40,7 +43,8 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(Role.USER)
   @Get('/profile')
   getProfile(@Req() req: RequestWithUser) {
     const user = req.user;
@@ -61,5 +65,13 @@ export class AuthController {
   logout(@Res({ passthrough: true }) res: Response) {
     this.authService.removeRefreshFromCookie(res);
     return;
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('ADMIN')
+  @Post('/role')
+  role() {
+    return {};
   }
 }
