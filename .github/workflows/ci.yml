@@ -12,6 +12,22 @@ on:
 jobs:
   check-project:
     runs-on: ubuntu-latest
+    services:
+      postgres-db:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: corporate_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:root@localhost:5432/corporate_db?schema=public
     steps:
       - name: Copy repository code
         uses: actions/checkout@v4
@@ -33,14 +49,21 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm run prisma:generate
 
+      - name: Run Eslint
+        run: pnpm run lint
+      - name: typeScript Check
+        run: pnpm run type-check
+
+      - name: Run Database Migrations
+        run: pnpm run prisma:migrate:deploy
+      - name: Seed Database
+        run: pnpm run prisma:seed
+
       - name: Build Shared Libraries
         run: pnpm nx run-many -t build --projects=@corporate/db
 
-      - name: Run Eslint
-        run: pnpm run lint
-
-      - name: typeScript Check
-        run: pnpm run type-check
+      - name: Run e2e Tests
+        run: pnpm run test:e2e
 
       - name: Build Project
         run: pnpm run build
