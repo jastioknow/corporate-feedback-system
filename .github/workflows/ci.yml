@@ -49,6 +49,9 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm run prisma:generate
 
+      - name: Build Shared Libraries
+        run: pnpm nx run-many -t build --projects=@corporate/db
+
       - name: Run Eslint
         run: pnpm run lint
       - name: typeScript Check
@@ -58,9 +61,6 @@ jobs:
         run: pnpm run prisma:migrate:deploy
       - name: Seed Database
         run: pnpm run prisma:seed
-
-      - name: Build Shared Libraries
-        run: pnpm nx run-many -t build --projects=@corporate/db
 
       - name: Run e2e Tests
         run: pnpm run test:e2e
