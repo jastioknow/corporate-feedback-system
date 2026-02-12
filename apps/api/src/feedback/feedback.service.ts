@@ -66,7 +66,6 @@ export class FeedbackService {
 
     if (!feedback) throw new NotFoundException('Отзыв не найден');
 
-    // Проверка прав: Админ может всё, Юзер - только своё и только если PENDING
     const isOwner = feedback.authorId === userId;
 
     if (!isOwner || feedback.status !== 'PENDING') {

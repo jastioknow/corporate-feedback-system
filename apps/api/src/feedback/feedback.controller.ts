@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -30,6 +32,7 @@ export class FeedbackController {
     return this.feedbackService.create(dto, req.user.sub);
   }
 
+  @HttpCode(HttpStatus.OK)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe({ whitelist: true }))
   @Roles('ADMIN')
@@ -38,11 +41,13 @@ export class FeedbackController {
     return this.feedbackService.updateStatus(id, dto);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get()
   findAll(@Req() req: RequestWithUser) {
     return this.feedbackService.findAll(req.user.sub, req.user.role);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req: RequestWithUser) {
     return this.feedbackService.remove(id, req.user.sub);
