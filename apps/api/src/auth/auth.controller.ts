@@ -20,6 +20,7 @@ import { RequestWithUser } from './interfaces/request-with-user.interface';
 import { RolesGuard } from './guards/roles.guard';
 import { Roles } from './decorators/roles.decorator';
 import { Role } from '@corporate/db';
+import type { AuthResponse } from '@corporate/types';
 
 @Controller('auth')
 export class AuthController {
@@ -28,7 +29,10 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   @Post('/login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
+  async login(
+    @Body() dto: LoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<AuthResponse> {
     const { user, tokens } = await this.authService.login(dto);
     this.authService.addRefreshFromCookie(res, tokens.refresh);
     return { user, access: tokens.access };
@@ -36,7 +40,10 @@ export class AuthController {
 
   @UsePipes(ValidationPipe)
   @Post('/register')
-  async register(@Body() dto: RegisterDto, @Res({ passthrough: true }) res: Response) {
+  async register(
+    @Body() dto: RegisterDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<AuthResponse> {
     const { user, tokens } = await this.authService.register(dto);
     this.authService.addRefreshFromCookie(res, tokens.refresh);
     return { user, access: tokens.access };
@@ -54,7 +61,10 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('jwt-refresh'))
   @Post('/refresh')
-  async refresh(@Req() req: RequestWithUser, @Res({ passthrough: true }) res: Response) {
+  async refresh(
+    @Req() req: RequestWithUser,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<AuthResponse> {
     const { user, tokens } = await this.authService.refreshTokens(req.user);
     this.authService.addRefreshFromCookie(res, tokens.refresh);
     return { user, access: tokens.access };

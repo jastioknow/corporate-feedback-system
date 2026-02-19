@@ -6,6 +6,7 @@ import { QueryProvider } from './providers/query-provider';
 import { siteConfig } from '../shared/config/metadata';
 
 import './globals.css';
+import { Toaster } from '@/src/shared/ui/sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,6 +37,7 @@ export default function RootLayout({
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}
+            <Toaster position="top-right" richColors closeButton duration={2000} />
           </ThemeProvider>
         </QueryProvider>
       </body>
