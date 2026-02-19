@@ -1,6 +1,52 @@
-import axios from 'axios';
+import axios, { type CreateAxiosDefaults } from 'axios';
 
-export const api = axios.create({
-  baseURL: 'http://localhost:4000/api',
+import { tokenService } from '../lib/auth/token';
+import { authService } from './auth.service';
+
+import { API_URL } from '../config/api';
+
+const options: CreateAxiosDefaults = {
+  baseURL: API_URL,
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
+};
+
+const axiosClassic = axios.create(options);
+const axiosWithAuth = axios.create(options);
+
+axiosWithAuth.interceptors.request.use((config) => {
+  const accessToken = tokenService.getAccessToken();
+
+  if (config?.headers && accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
 });
+
+axiosWithAuth.interceptors.response.use(
+  (config) => config,
+  async (error) => {
+    const originalRequest = error.config;
+
+    console.log(
+      'interceptor проверка поля _isRetry',
+      originalRequest._isRetry,
+      originalRequest,
+    );
+
+    if (error?.response?.status == 401 && error.config && !error.config._isRetry) {
+      originalRequest._isRetry = true;
+      try {
+        await authService.getNewTokens();
+        return axiosWithAuth.request(originalRequest);
+      } catch (error) {
+        tokenService.removeAccessTokenStorage();
+        return Promise.reject(error);
+      }
+    }
+
+    throw error;
+  },
+);
+
+export { axiosClassic, axiosWithAuth };
