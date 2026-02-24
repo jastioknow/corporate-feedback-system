@@ -8,7 +8,7 @@ import { USER_ENDPOINTS } from '@/src/shared/config/api';
 export const useLogin = (reset: () => void) => {
   const router = useRouter();
 
-  return useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: LoginInput) => authService.login(data),
     onSuccess: (response) => {
       toast.success(`С возвращением, ${response.data.user.name}!`);
@@ -28,4 +28,6 @@ export const useLogin = (reset: () => void) => {
       }
     },
   });
+
+  return { mutate, isPending };
 };
