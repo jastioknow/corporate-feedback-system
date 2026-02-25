@@ -21,7 +21,7 @@ export const useLogin = (reset: () => void) => {
       const message = error.response?.data?.message || 'Ошибка авторизации';
 
       if (error.response?.status === 401) {
-        toast.error('Неверный логин или пароль');
+        toast.error('Неверная почта или пароль');
       } else {
         toast.error(message);
         console.error('[Login Error]:', error);
