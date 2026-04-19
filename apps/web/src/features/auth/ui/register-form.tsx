@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { registerSchema, type RegisterSchema } from '../model/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRegister } from '../api/use-register';
+import Link from 'next/link';
 import {
   Card,
   CardHeader,
@@ -22,7 +23,7 @@ import {
 } from '@/src/shared/ui/form';
 import { Input } from '@/src/shared/ui/input';
 import { Button } from '@/src/shared/ui/button';
-import Link from 'next/link';
+import { APP_ROUTES } from '@/src/shared/config/api';
 
 export function RegisterForm() {
   const form = useForm<RegisterSchema>({
@@ -40,8 +41,9 @@ export function RegisterForm() {
     <Card className="w-full max-w-md border-zinc-800 bg-black/50 backdrop-blur-xl">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Регистрация</CardTitle>
-        <CardDescription>Введите свои данные для доступа к системе</CardDescription>
+        <CardDescription>Создайте аккаунт для доступа к системе</CardDescription>
       </CardHeader>
+
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -50,9 +52,9 @@ export function RegisterForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Имя</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Введите имя" {...field} />
+                    <Input placeholder="Ваше имя" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -66,7 +68,7 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Введите email" {...field} />
+                    <Input placeholder="Рабочая почта" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,7 +82,7 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>Пароль</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Введите пароль" {...field} />
+                    <Input type="password" placeholder="Минимум 4 символа" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,7 +122,7 @@ export function RegisterForm() {
         <p className="text-sm text-zinc-400">
           Уже есть аккаунт?
           <Link
-            href="/login"
+            href={APP_ROUTES.AUTH.LOGIN}
             className="text-white hover:underline underline-offset-4 ml-1.5"
           >
             Войти
