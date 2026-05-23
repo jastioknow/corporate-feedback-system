@@ -23,6 +23,7 @@ import {
 import { Input } from '@/src/shared/ui/input';
 import { Button } from '@/src/shared/ui/button';
 import Link from 'next/link';
+import { APP_ROUTES } from '@/src/shared/config/api';
 
 export function LoginForm() {
   const form = useForm<LoginSchema>({
@@ -88,7 +89,7 @@ export function LoginForm() {
         <p className="text-sm text-zinc-400">
           Нет аккаунта?
           <Link
-            href="/register"
+            href={APP_ROUTES.AUTH.REGISTER}
             className="text-white hover:underline underline-offset-4 ml-1.5"
           >
             Зарегистрироваться

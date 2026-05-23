@@ -26,7 +26,7 @@ export class FeedbackService {
 
     return await this.prisma.client.feedback.update({
       where: { id },
-      data: { ...dto },
+      data: { status: dto.status, adminReply: dto?.adminReply },
     });
   }
 

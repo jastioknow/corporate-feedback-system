@@ -3,7 +3,7 @@ import type { LoginInput } from '@corporate/types';
 import { authService } from '@/src/shared/api/auth.service';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { USER_ENDPOINTS } from '@/src/shared/config/api';
+import { APP_ROUTES } from '@/src/shared/config/api';
 
 export const useLogin = (reset: () => void) => {
   const router = useRouter();
@@ -13,7 +13,7 @@ export const useLogin = (reset: () => void) => {
     onSuccess: (response) => {
       toast.success(`С возвращением, ${response.data.user.name}!`);
       reset();
-      router.push(USER_ENDPOINTS.PROFILE);
+      router.push(APP_ROUTES.USER.PROFILE);
     },
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,11 +1,13 @@
 import { AuthResponse, LoginInput, RegisterInput } from '@corporate/types';
 import { axiosClassic } from '../api/base';
 import { tokenService } from '../lib/auth/token';
-import { AUTH_ENDPOINTS } from '../config/api';
+import { API_ENDPOINTS } from '../config/api';
+
+const { AUTH } = API_ENDPOINTS;
 
 class AuthService {
   async register(data: RegisterInput) {
-    const response = await axiosClassic.post<AuthResponse>(AUTH_ENDPOINTS.REGISTER, data);
+    const response = await axiosClassic.post<AuthResponse>(AUTH.REGISTER, data);
 
     if (response?.data?.access) {
       tokenService.saveAccessTokenStorage(response.data.access);
@@ -14,7 +16,7 @@ class AuthService {
   }
 
   async login(data: LoginInput) {
-    const response = await axiosClassic.post<AuthResponse>(AUTH_ENDPOINTS.LOGIN, data);
+    const response = await axiosClassic.post<AuthResponse>(AUTH.LOGIN, data);
 
     if (response?.data?.access) {
       tokenService.saveAccessTokenStorage(response.data.access);
@@ -23,7 +25,7 @@ class AuthService {
   }
 
   async logout() {
-    const response = await axiosClassic.post(AUTH_ENDPOINTS.LOGOUT);
+    const response = await axiosClassic.post(AUTH.LOGOUT);
     if (response?.status === 204) {
       tokenService.removeAccessTokenStorage();
     }
@@ -31,7 +33,7 @@ class AuthService {
   }
 
   async getNewTokens() {
-    const response = await axiosClassic.post<AuthResponse>(AUTH_ENDPOINTS.REFRESH);
+    const response = await axiosClassic.post<AuthResponse>(AUTH.REFRESH);
 
     if (response?.data?.access) {
       tokenService.saveAccessTokenStorage(response.data.access);
